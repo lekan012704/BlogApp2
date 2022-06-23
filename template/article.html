@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+{% block content %}
+            <!-- BEGIN CONTENT -->
+            <main class="content">
+                <div class="section-post">
+                    <div class="wrapper">
+                        <div class="pagetitle"><div class="h1">Post</div></div>
+                        <div class="breadcrumbs">
+                            <a href="#">Home</a> <span class="dash"></span> <a href="#">{{post.category}}</a> <span class="dash"></span> <span>{{post.title}}</span>
+                        </div>
+                        <div class="columns">
+                            <div class="columns_center">
+                                <article class="article">
+                                    <div class="article_cover">
+                                        <img src="{{post.image.url}}" alt=""/>
+                                        <a href="blog.html" class="cats_item">{{post.category}}</a>
+                                    </div>
+                                    <div class="article_infoline infoline">
+                                        <div class="infoline_date">{{post.created_at}}</div> <span class="dash"></span>
+                                        <div class="infoline_author">
+                                            <div class="ava"><img data-src="{{post.image.url}}" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" class="js-img" alt=""/></div>
+                                            {{post.author}}
+                                        </div>
+                                    </div>
+                                    <div class="article_txt">
+                                        <h1>{{post.title}}</h1>
+                                        <p class="short">{{post.content}}</p>
+                                       
+                                    </div>
+                                   
+                                    
+                                </article>
+                                <div class="comments_form">
+                                    <h3>Leave a comment</h3>
+                                    <form id="form" method="POST">
+                                        {% csrf_token %}
+                                        <div class="form_cols">
+                                            <div class="form_cols_item">
+                                                <div class="form_row">
+                                                    {{form.full_name|add_class:"form-control"|attr:"placeholder: Your Name"|attr:"type:text"}}
+                                                </div>
+                                            </div>
+                                            <div class="form_cols_item">
+                                                <div class="form_row">
+                                                    {{form.phone_number|add_class:"form-control"|attr:"placeholder: +1 (___) ___ __ __"|attr:"type:tel"}}
+                                                </div>
+                                            </div>
+                                            <div class="form_cols_item">
+                                                <div class="form_row">
+                                                    {{form.email|add_class:"form-control"|attr:"placeholder:Your email"|attr:"type:email"}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form_row">
+                                            {{form.comment|add_class:"form-control"|attr:"placeholder:Enter your comment"|attr:"type:text"}}
+                                        </div>
+                                        <div class="form_btn"><button type="submit" class="btn">post comment</button></div>
+                                    </form>
+                                </div>
+                                    {% for c in postComment %}
+                                        {{c.comment}}<br/>
+                                        {{c.full_name}}<br/>
+                                        {{c.created_at}}
+                                    {% endfor %}
+                                <a href="#" class="bann"><img data-src="img/bad1.jpg" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" class="js-img" alt=""/></a>
+                            </div>
+                            <aside class="columns_sidebar sidebar">
+                                <div class="sidebar_search">
+                                    <form>
+                                        <div class="search">
+                                            <input type="text" class="form-control" placeholder="Search..."/>
+                                            <button class="btn"><span class="icon-search"></span></button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="sidebar_widget">
+                                    <h3>Recent stories</h3>
+                                    <div class="stories">
+                                        {% for r in side_recent_post %}
+                                        <div class="stories_item">
+                                            <div class="stories_item_img"><a href="{% url 'details' r.slug %}"><img data-src="{{r.image.url}}" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" class="js-img" alt=""/></a></div>
+                                            <div class="stories_item_infoline infoline">
+                                                <div class="infoline_date">{{r.created_at}}</div> <span class="dash"></span>
+                                                <div class="infoline_tag">{{r.cateogry}}</div>
+                                            </div>
+                                            <div class="stories_item_title"><a href="{% url 'details' r.slug %}">{{r.title}}</a></div>
+                                        </div>
+                                        {% endfor %}
+                                        
+                                    </div>
+                                </div>
+                                <div class="sidebar_widget">
+                                    <h3>Categories</h3>
+                                    <div class="cats">
+                                        {% for c in category %}
+                                        <a href="{% url 'Blog' c.slug %}" class="cats_item">{{c.name}}</a>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <a href="#" class="bann"><img data-src="img/bad2.jpg" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" class="js-img" alt=""/></a>
+                                <div class="sidebar_widget">
+                                    <h3>Follow us</h3>
+                                    <div class="soc">
+                                        <div class="soc_item">
+                                            <a href="#" target="_blank">
+                                                <span class="soc_item_icon"><span class="icon-fb"></span></span>
+                                                <span class="soc_item_txt">2,1 k+</span>
+                                            </a>
+                                        </div>
+                                        <div class="soc_item">
+                                            <a href="#" target="_blank">
+                                                <span class="soc_item_icon"><span class="icon-tw"></span></span>
+                                                <span class="soc_item_txt">3,6 k+</span>
+                                            </a>
+                                        </div>
+                                        <div class="soc_item">
+                                            <a href="#" target="_blank">
+                                                <span class="soc_item_icon"><span class="icon-youtube"></span></span>
+                                                <span class="soc_item_txt">2,8 k+</span>
+                                            </a>
+                                        </div>
+                                        <div class="soc_item">
+                                            <a href="#" target="_blank">
+                                                <span class="soc_item_icon"><span class="icon-instagram"></span></span>
+                                                <span class="soc_item_txt">6,3 k+</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="sidebar_widget">
+                                    <h3>Popular posts</h3>
+                                    <div class="popular">
+                                        {% for p in side_popular_post %}
+                                        <div class="popular_item">
+                                            <div class="popular_item_img"><a href="{% url 'details' p.slug %}"><img data-src="{{p.image.url}}" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" class="js-img" alt=""/></a></div>
+                                            <div class="popular_item_cont">
+                                                <div class="popular_item_title"><a href="{% url 'details' p.slug %}">{{p.title|truncatewords:7}}</a></div>
+                                                <div class="popular_item_infoline infoline">
+                                                    <div class="infoline_date">{{p.created_at}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                        
+                                        
+                                    </div>
+                                </div>
+                            </aside>
+                        </div>
+                    </div>
+                </div>   
+            </main>
+            <!-- CONTENT EOF   -->
+{% endblock content %}
