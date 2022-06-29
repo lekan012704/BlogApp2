@@ -69,9 +69,10 @@
                             </div>
                             <aside class="columns_sidebar sidebar">
                                 <div class="sidebar_search">
-                                    <form>
+                                    <form method="GET">
+                                        {% csrf_token %}
                                         <div class="search">
-                                            <input type="text" class="form-control" placeholder="Search..."/>
+                                            <input type="text" class="form-control" name="search" placeholder="Search..."/>
                                             <button class="btn"><span class="icon-search"></span></button>
                                         </div>
                                     </form>
